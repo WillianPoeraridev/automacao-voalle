@@ -1,0 +1,4 @@
+# Arquivos de output do Robot Framework
+log.html
+report.html
+output.xml
