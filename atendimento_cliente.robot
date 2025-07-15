@@ -18,7 +18,7 @@ Buscar Cliente no Voalle e Obter Nome
     Go To    https://erp.fenixwireless.com.br/SearchPeople
     
     Wait Until Element Is Visible    id=search
-    Input Text    id=search    ${cpf}
+    Input Text    ID=search_quebrado    ${cpf}
     Press Keys    id=search    ENTER
     
     Wait Until Element Is Visible    xpath=(//div[@role="row"]//b)[1]

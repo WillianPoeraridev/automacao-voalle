@@ -2,3 +2,11 @@
 log.html
 report.html
 output.xml
+.env
+
+# Ignorar todos os screenshots
+*.png
+
+# Ignorar a pasta de relatórios e logs gerados
+/reports/
+selenium-screenshot-*.png

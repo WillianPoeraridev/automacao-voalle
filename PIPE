@@ -1,0 +1,12 @@
+==============================================================================
+Atendimento Cliente                                                           
+==============================================================================
+Cenário 1: Consultar Cliente                                          | FAIL |
+Element with locator 'ID=search_quebrado' not found.
+------------------------------------------------------------------------------
+Atendimento Cliente                                                   | FAIL |
+1 test, 0 passed, 1 failed
+==============================================================================
+Output:  C:\Users\HP\Music\VS Code\automacao-voalle\output.xml
+Log:     C:\Users\HP\Music\VS Code\automacao-voalle\log.html
+Report:  C:\Users\HP\Music\VS Code\automacao-voalle\report.html
