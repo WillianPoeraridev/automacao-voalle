@@ -10,3 +10,15 @@ output.xml
 # Ignorar a pasta de relatórios e logs gerados
 /reports/
 selenium-screenshot-*.png
+
+# Cache do Python
+__pycache__/
+
+# Configuração do VS Code
+.vscode/
+
+# Cache de bibliotecas do Robot Framework
+.robotframework-dotenv-library/
+
+# Arquivos temporários
+PIPE
