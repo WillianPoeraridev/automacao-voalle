@@ -1,6 +1,7 @@
 *** Settings ***
 Library           Dialogs
 Library           SeleniumLibrary
+Library           DateTime
 #Suite Teardown    Close Browser  # Desativado temporariamente para facilitar a depuração
 
 *** Test Cases ***
@@ -79,7 +80,6 @@ Abrir e Logar no PipeRun
 
 Navegar para Dashboard de Contratos
     [Arguments]    ${nome_do_cliente}
-    [Documentation]    Navega para a tela de contratos, confirma e busca pelo nome do cliente.
     Go To    https://erp.fenixwireless.com.br/contract_dashboard#contracts-maintenance
     ${seletor_botao_confirmar}=    Set Variable    xpath=//button[span[text()='Confirmar']]
     Wait Until Element Is Visible    ${seletor_botao_confirmar}    timeout=15s
@@ -87,6 +87,7 @@ Navegar para Dashboard de Contratos
     ${seletor_campo_busca}=    Set Variable    css=div#contracts-maintenance-table_filter input
     Wait Until Element Is Visible    ${seletor_campo_busca}    timeout=15s
     Input Text    ${seletor_campo_busca}    ${nome_do_cliente}
+    Press Keys    ${seletor_campo_busca}    ENTER
 
 Selecionar Contrato, Serviço e Iniciar Alteração
     [Documentation]    Clica no primeiro contrato da lista, acessa serviços e inicia a alteração.
@@ -110,7 +111,7 @@ Aguardar Confirmacao e Acessar Faturamento
     ...                aguarda o clique em CONFIRMAR e abre a aba “Dados Faturamento”.
 
     # 1. Espera o modal aparecer (procura o botão CONFIRMAR)
-    ${CONFIRM_MENSAL}=    Set Variable    xpath=//button[normalize-space(.)='CONFIRMAR']
+     ${CONFIRM_MENSAL}=    Set Variable    xpath=//button[.//span[text()='Confirmar']]
     Wait Until Element Is Visible    ${CONFIRM_MENSAL}    timeout=5m
 
     # 2. Coleta os nomes dos planos via pop-up
@@ -123,10 +124,21 @@ Aguardar Confirmacao e Acessar Faturamento
     # 4. Aguarda o modal desaparecer
     Wait Until Element Is Not Visible    ${CONFIRM_MENSAL}    timeout=5m
 
+    Aguardar Confirmacao e Acessar Faturamento
+
     # 5. Abre a aba “Dados Faturamento”
-    Click Element    css=li#invoiceDataTab
+    Click Element       css=li#invoiceDataTab
+    Wait Until Element Is Visible    id=ContractBeginningDate    timeout=15s
+
+    # Pega a data de hoje
+    ${hoje}=    Get Current Date    result_format=%d/%m/%Y
+
+    # Seta a data direto via JS e dispara blur
+    Click Element       id=ContractBeginningDate
+    Execute Javascript  document.querySelector('#ContractBeginningDate').value='${hoje}';
+    Press Keys          id=ContractBeginningDate    \\9
 
     # 6. Pop-up final
-    Pause Execution    Clique OK para finalizar o robô.
+    Pause Execution     Clique OK para finalizar o robô.
 
     RETURN    ${plano_antigo}    ${plano_novo}
